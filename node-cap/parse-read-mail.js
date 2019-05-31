@@ -1,14 +1,14 @@
 module.exports.parseReadMail = x => {
     const Id = x[0];
-    const body = x[1].split('|');
-    const length = body.length;
+    const y = x[1].split('|');
+    const length = y.length;
     if (length === 5) {
         return {
             Id,
-            BuyerName: body[0],
-            ItemTypeId: body[2],
-            Amount: parseInt(body[1], 10),
-            UnitPriceSilver: parseInt(body[3], 10) / 10000,
+            BuyerName: y[0],
+            Amount: parseInt(y[1], 10),
+            ItemTypeId: y[2],
+            UnitPriceSilver: parseInt(y[3], 10) / 10000,
         }
     }
     return;
