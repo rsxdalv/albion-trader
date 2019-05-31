@@ -106,7 +106,7 @@ module.exports.receiveMessage = ([channel, body]) => {
         db = dbReducer(db, [entry]);
         updateID = Math.random();
         // database.push(entry);
-        console.log(entry[0], JSON.stringify(entry[1], undefined, 3));
+        // console.log(entry[0], JSON.stringify(entry[1], undefined, 3));
     }
 }
 

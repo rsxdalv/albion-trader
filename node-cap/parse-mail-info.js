@@ -1,6 +1,6 @@
 const R = require('ramda');
-const { bytesToGuid } = require('../bytes-to-guid');
-const { mailTypes } = require('../enums');
+const { bytesToGuid } = require('./bytes-to-guid');
+const { mailTypes } = require('./enums');
 
 const CSharpDateTimeToJS = ticks =>
     new Date(

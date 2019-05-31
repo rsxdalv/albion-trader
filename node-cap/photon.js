@@ -3,7 +3,7 @@ const util = require('util')
 const { streamConstructor, decodeParamsWithDebug } = require('./params');
 const { parseReadMail } = require('./parse-read-mail')
 const { parseMailInfo } = require('./parse-mail-info')
-const { receiveMessage } = require('../albion-history')
+const { receiveMessage } = require('./albion-history')
 
 /**
  * @param {any} myObject
@@ -362,14 +362,14 @@ function readMessage(buf, idx, len, root) {
                 )
             })
             if (result.data[253] === 166) {
-                ins2(
-                    parseReadMail(result.data)
-                )
+                // ins2(
+                //     parseReadMail(result.data)
+                // )
                 receiveMessage(["marketnotifications", parseReadMail(result.data)])
             } else if (result.data[253] === 165) {
-                ins2(
-                    parseMailInfo(result.data)
-                )
+                // ins2(
+                //     parseMailInfo(result.data)
+                // )
                 receiveMessage(["raw_notifications", parseMailInfo(result.data)])
             } else {
                 // ins2(result);
