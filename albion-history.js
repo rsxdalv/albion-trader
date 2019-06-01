@@ -2,30 +2,32 @@
     recycle: true
 })
 
-var Cap = require('cap').Cap;
+var { Cap, decoders } = require('cap');
 const { parsePhoton } = require('./photon');
-
-var decoders = require('cap').decoders;
 var PROTOCOL = decoders.PROTOCOL;
+var network = require('network');
 
 var c = new Cap();
-var device = Cap.findDevice('192.168.0.100');
-var filter = 'udp and port 5056';
-var bufSize = 10 * 1024 * 1024;
+let linkType;
 var buffer = Buffer.alloc(65535);
 
-var linkType = c.open(device, filter, bufSize, buffer);
+network.get_active_interface(function (err, obj) {
+    if (err) {
+        throw new Error("Can't find active network interface (disconnected?)")
+    }
+    var device = Cap.findDevice(obj.ip_address);
+    var filter = 'udp and port 5056';
+    var bufSize = 10 * 1024 * 1024;
+    linkType = c.open(device, filter, bufSize, buffer);
+    c.setMinBytes && c.setMinBytes(0);
 
-c.setMinBytes && c.setMinBytes(0);
-
-let rateSpacer = 100;
-let rateCounter = -1;
+})
 
 c.on('packet', /**
-     * @param {string} nbytes
-     * @param {any} trunc
-     */
- function (nbytes, trunc) {
+    * @param {string} nbytes
+    * @param {any} trunc
+    */
+function (nbytes, trunc) {
     // console.log('packet: length ' + nbytes + ' bytes, truncated? '
     //     + (trunc ? 'yes' : 'no'));
     // raw packet data === buffer.slice(0, nbytes)

@@ -12,6 +12,7 @@
     "cap": "^0.2.0",
     "change-case": "^3.1.0",
     "express": "^4.17.1",
+    "network": "^0.4.1",
     "ramda": "^0.26.1"
   },
   "devDependencies": {}
