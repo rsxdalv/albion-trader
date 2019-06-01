@@ -1,5 +1,5 @@
 {
     "pkg": {
-        "assets": "static/**/*"
+        "assets": ["static/**/*", "node_modules/network/lib/win32.js"]
     }
 }
