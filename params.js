@@ -201,8 +201,6 @@ const Deserialize = (stream, type) => {
             return DeserializeOperationRequest(stream);
         case 115:
             return DeserializeString(stream);
-        case 117: // Workaround
-            return DeserializeString(stream);
         case 120:
             return DeserializeByteArray(stream);
         case 121:
