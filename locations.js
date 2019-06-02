@@ -211,7 +211,7 @@ module.exports.locations = {
     "4004": "Fort Sterling", // Market?
     "4000#1": "Fort Thursair",
     "4001": "Aberdown Harbour",
-    "4002": "Mull Quay",
+    "4002": "Fort Sterling",
     "4005": "Mountain Landing",
     "4006": "Mountain Cross",
     "4201": "Pen Garn",
