@@ -141,22 +141,20 @@ const DeserializeArray = (stream) => {
     }
 }
 
-/** @param {Stream} din */
-const DeserializeDictionary = (din) => {
-    const typeCode1 = din.ReadByte();
-    const typeCode2 = din.ReadByte();
-    const num = DeserializeShort(din);
+/** @param {Stream} stream */
+const DeserializeDictionary = (stream) => {
+    const typeCode1 = stream.ReadByte();
+    const typeCode2 = stream.ReadByte();
+    const num = DeserializeShort(stream);
     const flag1 = typeCode1 == 0 || typeCode1 == 42;
     const flag2 = typeCode2 == 0 || typeCode2 == 42;
     const instance = {};
     // const instance = Activator.CreateInstance(typeof (Dictionary<>).MakeGenericType(this.GetTypeOfCode(typeCode1), this.GetTypeOfCode(typeCode2)));
     for (let index = 0; index < num; ++index) {
-        const key = this.Deserialize(din, flag1 ? din.ReadByte() : typeCode1);
-        const obj = this.Deserialize(din, flag2 ? din.ReadByte() : typeCode2);
+        const key = Deserialize(stream, flag1 ? stream.ReadByte() : typeCode1);
+        const obj = Deserialize(stream, flag2 ? stream.ReadByte() : typeCode2);
         instance[key] = obj;
-        // instance.Add(key, obj);
     }
-    instance /*?*/
     return instance;
 }
 

@@ -398,11 +398,13 @@ if (test) {
      * @type {SpecialJSON}
      */
     // @ts-ignore
-    const p = require("./roundabout.json");
+    // const p = require("./roundabout.json");
+    const p = require("./logs/roundabouts.json");
     // const p = require("./330.json");
     const startOff = 12, length = 10000;
     const packets = p
         // .slice(startOff - 1, startOff + length - 1)
+        .filter(x => x._source.layers.data)
         .map(x => x._source.layers.data["data.data"])
 
     console.log("module.exports.data = [");
