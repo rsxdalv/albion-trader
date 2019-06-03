@@ -4,6 +4,8 @@ const { streamConstructor, decodeParamsWithDebug } = require('./params');
 const { parseReadMail } = require('./parse-read-mail')
 const { parseMailInfo } = require('./parse-mail-info')
 const { receiveMessage } = require('./web-server')
+const { OPERATION_TYPES } = require('./op-dict');
+const { readAuctions } = require('./auctions');
 
 /**
  * @param {any} myObject
@@ -361,18 +363,21 @@ function readMessage(buf, idx, len, root) {
                     streamConstructor(buf, start), true
                 )
             })
-            if (result.data[253] === 166) {
-                // ins2(
-                //     parseReadMail(result.data)
-                // )
-                receiveMessage(["readMail", parseReadMail(result.data)])
-            } else if (result.data[253] === 165) {
-                // ins2(
-                //     parseMailInfo(result.data)
-                // )
-                receiveMessage(["getMailInfo", parseMailInfo(result.data)])
-            } else {
-                // ins2(result);
+            const OP_TYPE_KEY = 253;
+            switch (result.data[OP_TYPE_KEY]) {
+                case OPERATION_TYPES.READ_MAIL:
+                    receiveMessage(["readMail", parseReadMail(result.data)]);
+                    break;
+                case OPERATION_TYPES.GET_MAIL_INFOS:
+                    receiveMessage(["getMailInfo", parseMailInfo(result.data)])
+                    break;
+                case OPERATION_TYPES.AUCTION_GET_MY_OPEN_OFFERS:
+                case OPERATION_TYPES.AUCTION_GET_FINISHED_AUCTIONS:
+                case OPERATION_TYPES.AUCTION_GET_MY_OPEN_REQUESTS:
+                    readAuctions(result.data);
+                    break;
+                // case OPERATION_TYPES
+                default: break;
             }
             return idx + metaLength + dataLength
         case messageTypesEnum.EVENT_DATA:

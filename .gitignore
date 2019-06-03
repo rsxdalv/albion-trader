@@ -3,3 +3,5 @@
 /release/
 database.json
 database.bak.json
+database.auctions.json
+database.auctions.bak.json

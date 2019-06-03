@@ -4,9 +4,10 @@ const path = require('path');
 const R = require('ramda');
 const fs = require('fs');
 const { exec } = require('child_process');
+const { titleCase } = require('change-case');
 const { locations } = require('./locations')
 const { itemNames } = require('./item-names')
-const { titleCase } = require('change-case');
+const { getAuctionsTableView, saveAuctions } = require('./auctions');
 
 exec(`start http://localhost:22009/visual/`)
 const isDev = process.env.ALBION_DEV || false;
@@ -133,12 +134,19 @@ app.use((req, res) => {
         return;
     }
 
+    if (req.url === '/table-auctions') {
+        res.end(getAuctionsTableView());
+        return;
+    }
+
     if (req.url === '/shutdown') {
         save(() => {
-            save(() => {
+            saveAuctions(() => {
                 res.end("Shutting down");
                 process.exit(0);
-            }, true);
+            })
+            // save(() => {
+            // }, true);
         });
         return;
     }
